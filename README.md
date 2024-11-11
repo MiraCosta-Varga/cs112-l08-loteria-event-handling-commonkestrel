@@ -1,3 +1,4 @@
+[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=17056125)
 ![Flier for an EChALE STEM Loteria night fundraiser](https://i.imgur.com/nnPOLo3.png)
 
 # **Lab #8 - Loteria + Event Handling**
