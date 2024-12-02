@@ -25,6 +25,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class HelloApplication extends Application {
     //CONSTANTS
@@ -43,9 +45,15 @@ public class HelloApplication extends Application {
     Button drawCardButton;
     ProgressBar cardProgress;
     int cardIndex = -1;
+    ArrayList<Integer> cardsLeft = new ArrayList<>();
+    Random rand = new Random();
 
     @Override
     public void start(Stage stage) throws IOException {
+        for (int i = 0; i < LOTERIA_CARDS.length; i++) {
+            cardsLeft.add(i);
+        }
+
         VBox layout = new VBox();
 
         Label titleLabel = new Label("EChALE STEM Loteria");
@@ -73,7 +81,10 @@ public class HelloApplication extends Application {
                 cardProgress.setStyle("-fx-accent: red");
                 messageLabel.setText("GAME OVER. No more cards! Exit and run program again to reset ^_^");
             } else {
-                LoteriaCard currentCard = LOTERIA_CARDS[cardIndex];
+                int nextCard = rand.nextInt(cardsLeft.size());
+                LoteriaCard currentCard = LOTERIA_CARDS[cardsLeft.get(nextCard)];
+                cardsLeft.remove(nextCard);
+
                 messageLabel.setText(currentCard.getCardName());
                 cardImageView.setImage(currentCard.getImage());
             }
