@@ -1,9 +1,7 @@
 package cs112.lab08;
 
 import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,20 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class HelloApplication extends Application {
@@ -45,13 +37,13 @@ public class HelloApplication extends Application {
     Button drawCardButton;
     ProgressBar cardProgress;
     int cardIndex = -1;
-    ArrayList<Integer> cardsLeft = new ArrayList<>();
+    int[] remainingCards = new int[LOTERIA_CARDS.length];;
     Random rand = new Random();
 
     @Override
     public void start(Stage stage) throws IOException {
         for (int i = 0; i < LOTERIA_CARDS.length; i++) {
-            cardsLeft.add(i);
+            remainingCards[i] = i;
         }
 
         VBox layout = new VBox();
@@ -81,9 +73,10 @@ public class HelloApplication extends Application {
                 cardProgress.setStyle("-fx-accent: red");
                 messageLabel.setText("GAME OVER. No more cards! Exit and run program again to reset ^_^");
             } else {
-                int nextCard = rand.nextInt(cardsLeft.size());
-                LoteriaCard currentCard = LOTERIA_CARDS[cardsLeft.get(nextCard)];
-                cardsLeft.remove(nextCard);
+                int cardsLeft = LOTERIA_CARDS.length - cardIndex;
+                int nextCard = rand.nextInt(cardsLeft);
+                LoteriaCard currentCard = LOTERIA_CARDS[remainingCards[nextCard]];
+                remainingCards[nextCard] = remainingCards[cardsLeft-1];
 
                 messageLabel.setText(currentCard.getCardName());
                 cardImageView.setImage(currentCard.getImage());
